@@ -1,26 +1,70 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Router, Switch, Route, Redirect } from "react-router-dom";
+import { withStyles } from "@material-ui/core/styles";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import history from "../src/configs/History";
+
+import routes from "./route";
+import PrivateRoute from "./containers/PrivateRoute/PrivateRoute";
+import Footer from "./components/Footer/Footer";
+import "./App.css";
+
+const useStyles = (theme) => ({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    minHeight: "100vh",
+  },
+});
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.pageNotFound.bind(this);
+  }
+
+  pageNotFound() {
+    return <Redirect to="/SignIn" />;
+  }
+
+  render() {
+    const { classes } = this.props;
+    let headerTabHighLightValue = 0;
+
+    return (
+      <div className={classes.root}>
+        <Router history={history}>
+          <Switch>
+            {routes.map(
+              ({ path, component: ComponentTag, _name, access }, index) =>
+                access === "PUBLIC" ? (
+                  <Route
+                    key={index}
+                    path={path}
+                    render={(props) => <ComponentTag {...props} />}
+                  />
+                ) : (
+                  <PrivateRoute
+                    headerTabHighLightValue={headerTabHighLightValue++}
+                    key={index}
+                    path={path}
+                    component={ComponentTag}
+                    {...this.props}
+                  />
+                )
+            )}
+            <Route
+              key={routes.length + 1}
+              {...this.props}
+              component={this.pageNotFound}
+            />
+          </Switch>
+          <Footer />
+        </Router>
+      </div>
+    );
+  }
 }
 
-export default App;
+export default withStyles(useStyles)(App);
