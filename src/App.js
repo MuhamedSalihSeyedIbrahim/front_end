@@ -37,11 +37,15 @@ class App extends Component {
         <Router history={history}>
           <Switch>
             {routes.map(
-              ({ path, component: ComponentTag, _name, access }, index) =>
+              (
+                { path, component: ComponentTag, _name, access, strict },
+                index
+              ) =>
                 access === "PUBLIC" ? (
                   <Route
                     key={index}
                     path={path}
+                    strict={strict}
                     render={(props) => <ComponentTag {...props} />}
                   />
                 ) : (
@@ -49,6 +53,7 @@ class App extends Component {
                     headerTabHighLightValue={headerTabHighLightValue++}
                     key={index}
                     path={path}
+                    strict={strict}
                     component={ComponentTag}
                     {...this.props}
                   />

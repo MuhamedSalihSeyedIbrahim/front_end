@@ -6,7 +6,6 @@ import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import Tab from "@material-ui/core/Tab";
 
 import IconButton from "@material-ui/core/IconButton";
@@ -14,6 +13,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 import routes from "../../route";
 import History from "../../configs/History";
@@ -64,11 +64,11 @@ export default function SwipeableTemporaryDrawer() {
         onKeyDown={toggleDrawer(anchor, false)}
       >
         <List>
-          {routes.map(({ path, name, access }, index) =>
+          {routes.map(({ path, name, access, icon: Icon, visibility }, index) =>
             access === "PRIVATE" ? (
-              <ListItem button key={index}>
+              <ListItem button key={index} style={{ visibility: visibility }}>
                 <ListItemIcon>
-                  <InboxIcon />
+                  <Icon />
                 </ListItemIcon>
                 <Tab
                   label={name}
@@ -88,7 +88,7 @@ export default function SwipeableTemporaryDrawer() {
       </div>{" "}
       <ListItem button style={{ display: "flex", marginTop: "auto" }}>
         <ListItemIcon>
-          <InboxIcon />
+          <ExitToAppIcon />
         </ListItemIcon>
         <Tab
           style={{ display: "flex", marginLeft: "auto" }}
