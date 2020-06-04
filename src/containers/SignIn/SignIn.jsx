@@ -3,6 +3,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -34,22 +35,20 @@ const useStyles = (theme) => ({
 });
 
 class SignIn extends Component {
- 
-  signInWithOTP(event){
-    let signInWithOTP ={
-      PhoneNo:event.target.phoneNo.value
-    }
+  signInWithOTP(event) {
+    let signInWithOTP = {
+      PhoneNo: event.target.phoneNo.value,
+    };
     console.log(signInWithOTP);
-  event.preventDefault();
-  }
-  signInWithEmail(event){
-    let signInWithEmailData = {
-      email:event.target.email.value,
-      password: event.target.password.value
-    }
-    console.log(signInWithEmailData)
     event.preventDefault();
-
+  }
+  signInWithEmail(event) {
+    let signInWithEmailData = {
+      email: event.target.email.value,
+      password: event.target.password.value,
+    };
+    console.log(signInWithEmailData);
+    event.preventDefault();
   }
 
   render() {
@@ -63,14 +62,26 @@ class SignIn extends Component {
             <LockOutlinedIcon />
           </Avatar>
 
-          <Divider orientation="vertical"  />
+          <Divider orientation="vertical" />
 
-          <Grid container spacing={10}>
-            <Grid item xs={6}>
+          <Grid container spacing={2}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
               <Typography component="h1" variant="h5">
                 Sign in with Email
               </Typography>
-              <form className={classes.form} onSubmit={this.signInWithEmail.bind(this)}>
+              <form
+                className={classes.form}
+                onSubmit={this.signInWithEmail.bind(this)}
+              >
                 <TextField
                   variant="outlined"
                   margin="normal"
@@ -113,13 +124,25 @@ class SignIn extends Component {
               </form>
             </Grid>
 
-            <Divider   />
+            <Divider />
 
-            <Grid item xs={6}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
               <Typography component="h1" variant="h5">
                 Sign in with OTP
               </Typography>
-              <form className={classes.form} onSubmit={this.signInWithOTP.bind(this)}>
+              <form
+                className={classes.form}
+                onSubmit={this.signInWithOTP.bind(this)}
+              >
                 <TextField
                   variant="outlined"
                   margin="normal"

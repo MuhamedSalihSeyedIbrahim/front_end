@@ -6,7 +6,7 @@ import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import Tab from "@material-ui/core/Tab";
+import ListItemText from "@material-ui/core/ListItemText";
 
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -58,7 +58,7 @@ export default function SwipeableTemporaryDrawer() {
         className={clsx(classes.list, {
           [classes.fullList]: anchor === "top" || anchor === "bottom",
         })}
-        style={{ display: "flex", flexDirection: "rowRreverse" }}
+        style={{ display: "flex", flexDirection: "rowRreverse", width: "100%" }}
         role="presentation"
         onClick={toggleDrawer(anchor, false)}
         onKeyDown={toggleDrawer(anchor, false)}
@@ -70,8 +70,8 @@ export default function SwipeableTemporaryDrawer() {
                 <ListItemIcon>
                   <Icon />
                 </ListItemIcon>
-                <Tab
-                  label={name}
+                <ListItemText
+                  primary={name}
                   key={index}
                   color="inherit"
                   path={path}
@@ -90,9 +90,9 @@ export default function SwipeableTemporaryDrawer() {
         <ListItemIcon>
           <ExitToAppIcon />
         </ListItemIcon>
-        <Tab
+        <ListItemText
           style={{ display: "flex", marginLeft: "auto" }}
-          label={"logout"}
+          primary={"logout"}
           key={routes.length + 1}
           color="inherit"
           path={"/SignIn"}

@@ -17,7 +17,7 @@ const useStyles = (theme) => ({
     fontWeight: theme.typography.fontWeightRegular,
   },
   paper: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
