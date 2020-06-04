@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import AddressBar from "../../components/AddressBar/AddressBar";
 import { withStyles } from "@material-ui/core/styles";
+import * as uuid from "uuid/v4";
 
 import "./Profile.css";
 
@@ -61,12 +62,14 @@ class Profile extends Component {
 
   removeAddressBar(ChildName, event) {
     event.preventDefault();
-    const address = this.state.address.filter(
+    const state = {...this.state}
+    const address = state.address.filter(
       ({ name }) => !(name === ChildName)
     );
+    console.log(address)
     this.setState((prevState) => ({
       ...prevState,
-      address: address,
+      address,
     }));
   }
 
@@ -90,9 +93,9 @@ class Profile extends Component {
   }
 
   addressBarUI() {
-    return this.state.address.map((address, index) => (
+    return this.state.address.map((address) => (
       <AddressBar
-        key={index}
+        key={uuid()}
         address={address}
         removeAddressBar={this.removeAddressBar.bind(this, address.name)}
         updateAddressData={this.updateAddressData.bind(this, address.name)}
