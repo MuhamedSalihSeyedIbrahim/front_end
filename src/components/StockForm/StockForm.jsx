@@ -406,7 +406,13 @@ class StockForm extends Component {
                 <Container maxWidth="md">
                   {this.state.weights.map((weight, index) => (
                     <div style={{ marginTop: "3px" }} key={uuid()}>
-                      <Box display="flex" border={1} justifyContent="center">
+                      <Box
+                        display="flex"
+                        border={1}
+                        borderColor={"#00000024"}
+                        borderRadius={"1%"}
+                        justifyContent="center"
+                      >
                         <Grid container style={{ margin: "5px" }} spacing={2}>
                           <Grid item xs={12} sm={4}>
                             <TextField
@@ -499,7 +505,13 @@ class StockForm extends Component {
                 <Container maxWidth="md">
                   {this.state.vaccines.map((vaccine, index) => (
                     <div style={{ marginTop: "3px" }} key={uuid()}>
-                      <Box display="flex" border={1} justifyContent="center">
+                      <Box
+                        display="flex"
+                        border={1}
+                        borderColor={"#00000024"}
+                        borderRadius={"1%"}
+                        justifyContent="center"
+                      >
                         <Grid container style={{ margin: "5px" }} spacing={2}>
                           <Grid item xs={12} sm={3}>
                             <TextField

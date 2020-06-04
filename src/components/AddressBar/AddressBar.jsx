@@ -109,7 +109,7 @@ class AddressBar extends Component {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Container maxWidth="md">
-              <Box display="flex" border={1} justifyContent="center">
+              <Box display="flex" border={1} borderColor={"#00000024"} borderRadius={"1%"} justifyContent="center">
                 <Grid container style={{ margin: "10px" }} spacing={2}>
                   {this.AddressInputs.map(
                     (

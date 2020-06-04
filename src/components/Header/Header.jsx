@@ -1,20 +1,37 @@
 import React from "react";
-import Paper from "@material-ui/core/Paper";
-import Tabs from "@material-ui/core/Tabs";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
 import Tab from "@material-ui/core/Tab";
+
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 
 import routes from "../../route";
 import History from "../../configs/History";
 
-export default function Header(props) {
-  const { headerTabHighLightValue } = props;
-  const [value, setValue] = React.useState(
-    headerTabHighLightValue ? headerTabHighLightValue : 0
-  );
+const useStyles = makeStyles({
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: "auto",
+  },
+});
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+export default function SwipeableTemporaryDrawer() {
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    right: false,
+  });
 
   const onClick = (path, logout = false) => {
     if (logout) {
@@ -23,28 +40,56 @@ export default function Header(props) {
     History.push(path);
   };
 
-  return (
-    <Paper square>
-      <Tabs
-        value={value}
-        indicatorColor="primary"
-        textColor="primary"
-        onChange={handleChange}
-      >
-        {routes.map(({ path, name, access }, index) =>
-          access === "PRIVATE" ? (
-            <Tab
-              label={name}
-              key={index}
-              color="inherit"
-              path={path}
-              onClick={(e) => onClick(path)}
-            />
-          ) : (
-            ""
-          )
-        )}
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
 
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <>
+      <div
+        className={clsx(classes.list, {
+          [classes.fullList]: anchor === "top" || anchor === "bottom",
+        })}
+        style={{ display: "flex", flexDirection: "rowRreverse" }}
+        role="presentation"
+        onClick={toggleDrawer(anchor, false)}
+        onKeyDown={toggleDrawer(anchor, false)}
+      >
+        <List>
+          {routes.map(({ path, name, access }, index) =>
+            access === "PRIVATE" ? (
+              <ListItem button key={index}>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <Tab
+                  label={name}
+                  key={index}
+                  color="inherit"
+                  path={path}
+                  onClick={(e) => onClick(path)}
+                />
+              </ListItem>
+            ) : (
+              ""
+            )
+          )}
+          <div></div>
+        </List>
+        <Divider />
+      </div>{" "}
+      <ListItem button style={{ display: "flex", marginTop: "auto" }}>
+        <ListItemIcon>
+          <InboxIcon />
+        </ListItemIcon>
         <Tab
           style={{ display: "flex", marginLeft: "auto" }}
           label={"logout"}
@@ -53,7 +98,40 @@ export default function Header(props) {
           path={"/SignIn"}
           onClick={(e) => onClick("/SignIn", true)}
         />
-      </Tabs>
-    </Paper>
+      </ListItem>
+    </>
+  );
+
+  return (
+    <div>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <Typography
+            variant="h6"
+            color="inherit"
+            style={{ cursor: "default" }}
+          >
+            FARM APP
+          </Typography>
+          <IconButton
+            style={{ display: "flex", marginLeft: "auto" }}
+            color="inherit"
+            aria-label="open drawer"
+            edge="end"
+            onClick={toggleDrawer("right", true)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <SwipeableDrawer
+            anchor={"right"}
+            open={state["right"]}
+            onClose={toggleDrawer("right", false)}
+            onOpen={toggleDrawer("right", true)}
+          >
+            {list("right")}
+          </SwipeableDrawer>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 }
